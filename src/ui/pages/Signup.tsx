@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
 import { useAuth } from "../../auth/AuthProvider";
+import { Navigate } from "react-router-dom";
 
 const Login = () => {
+  const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const auth = useAuth();
@@ -14,6 +15,12 @@ const Login = () => {
     <div>
       <h2>Login</h2>
       <form>
+        <input
+          type="text"
+          placeholder="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
         <input
           type="text"
           placeholder="Username"

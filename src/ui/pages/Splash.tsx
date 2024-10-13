@@ -42,7 +42,7 @@ function Splash() {
                   style={{
                     width: "100%",
                     height: "auto",
-                    borderRadius: "90px",
+                    borderRadius: "100px",
                   }}
                 />
               </Grid>
@@ -67,7 +67,7 @@ function Splash() {
             }}
           >
             <Link
-              to="/login"
+              to="/signup"
               className="splash__link splash__link--primary"
               style={{ textDecoration: "none" }}
             >
@@ -76,7 +76,7 @@ function Splash() {
           </Button>
           <p className="splash__text">
             Already have an account?
-            <Link to="/SignIn" className="splash__link splash__link--secondary">
+            <Link to="/login" className="splash__link splash__link--secondary">
               Sign In
             </Link>
           </p>
