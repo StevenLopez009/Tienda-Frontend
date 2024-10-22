@@ -41,7 +41,7 @@ const Login = () => {
   }
 
   if (auth.isAuthenticated) {
-    return <Navigate to="/" />;
+    return <Navigate to="/dashboard" />;
   }
   return (
     <div>

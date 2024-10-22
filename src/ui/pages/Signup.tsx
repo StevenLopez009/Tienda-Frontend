@@ -2,9 +2,8 @@ import { useState } from "react";
 import { useAuth } from "../../auth/AuthProvider";
 import { Navigate, useNavigate } from "react-router-dom";
 import { API_URL } from "../../auth/constants";
-import { AuthResponseError } from "../../types/types";
 
-const Login = () => {
+const SignUp = () => {
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -34,11 +33,17 @@ const Login = () => {
         goTo("/login");
       } else {
         console.log("Something went wrong");
-        const json = (await response.json()) as AuthResponseError;
-        setErrorResponse(json.body.error);
+        try {
+          const json = await response.json();
+          setErrorResponse(json.error || "An error occurred");
+        } catch (err) {
+          console.error("Failed to parse response:", err);
+          setErrorResponse("An error occurred while processing your request.");
+        }
       }
     } catch (error) {
-      console.log(error);
+      console.log("Fetch error:", error);
+      setErrorResponse("An error occurred while connecting to the server.");
     }
   }
 
@@ -49,7 +54,7 @@ const Login = () => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <h1>SignUp</h1>
+        <h1>Sign Up</h1>
         {errorResponse && <p>{errorResponse}</p>}
         <input
           type="text"
@@ -69,10 +74,10 @@ const Login = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit">Login</button>
+        <button type="submit">Crear Cuenta</button>
       </form>
     </div>
   );
 };
 
-export default Login;
+export default SignUp;
