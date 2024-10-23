@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../../auth/AuthProvider";
 import { API_URL } from "../../auth/constants";
-import { AuthResponseError } from "../../types/types";
+import { AuthResponse, AuthResponseError } from "../../types/types";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -29,7 +29,13 @@ const Login = () => {
       if (response.ok) {
         console.log("Login successfully");
         setErrorResponse("");
-        goTo("/dashboard");
+
+        const json = (await response.json()) as AuthResponse;
+
+        if (json.body.accessToken && json.body.refreshToken) {
+          auth.saveUser(json);
+          goTo("/dashboard");
+        }
       } else {
         console.log("Something went wrong");
         const json = (await response.json()) as AuthResponseError;
