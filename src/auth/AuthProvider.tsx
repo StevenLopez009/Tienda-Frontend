@@ -1,6 +1,5 @@
 import { useContext, createContext, useState, useEffect } from "react";
 import { AccessTokenResponse, AuthResponse, User } from "../types/types";
-import { json } from "react-router-dom";
 import { API_URL } from "./constants";
 
 interface AuthProviderProps {
@@ -18,7 +17,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [accessToken, setAccessToken] = useState<string>("");
   const [user, setUser] = useState<User>();
-  //const [refreshToken, setRefreshToken] = useState<string>("");
 
   useEffect(() => {}, []);
 
@@ -79,35 +77,43 @@ export function AuthProvider({ children }: AuthProviderProps) {
         if (newAccessToken) {
           const userInfo = await getUserInfo(newAccessToken);
           if (userInfo) {
-            setAccessToken(newAccessToken);
-            //setRefreshToken(userData.body.refreshToken);
-            localStorage.setItem("token", JSON.stringify(token));
-            setIsAuthenticated(true);
-            setUser(userInfo);
+            saveSessionInfo(userInfo, newAccessToken, token);
           }
         }
       }
     }
   }
 
+  function saveSessionInfo(
+    userInfo: User,
+    accessToken: string,
+    refreshToken: string
+  ) {
+    setAccessToken(accessToken);
+    localStorage.setItem("token", JSON.stringify(refreshToken));
+    setIsAuthenticated(true);
+    setUser(userInfo);
+  }
+
   function getAccessToken() {
     return accessToken;
   }
 
-  function getRefreshToken() {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const { refreshToken } = JSON.parse(token);
-      return refreshToken;
+  function getRefreshToken(): string | null {
+    const tokenData = localStorage.getItem("token");
+    if (tokenData) {
+      const { token } = JSON.parse(tokenData);
+      return token;
     }
+    return null;
   }
 
   function saveUser(userData: AuthResponse) {
-    setAccessToken(userData.body.accessToken);
-    //setRefreshToken(userData.body.refreshToken);
-    setUser(userData.body.user);
-    localStorage.setItem("token", JSON.stringify(userData.body.refreshToken));
-    setIsAuthenticated(true);
+    saveSessionInfo(
+      userData.body.user,
+      userData.body.accessToken,
+      userData.body.refreshToken
+    );
   }
 
   return (
