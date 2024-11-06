@@ -1,5 +1,8 @@
+import { useAuth } from "../../auth/AuthProvider";
+
 function Home() {
-  return <h1>Home</h1>;
+  const auth = useAuth();
+  return <h1>Home de {auth.getUser()?.name || ""}</h1>;
 }
 
 export default Home;

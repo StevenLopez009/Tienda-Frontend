@@ -7,6 +7,7 @@ import Signup from "./ui/pages/Signup.tsx";
 import Home from "./ui/pages/Home.tsx";
 import ProtectedRoute from "./ui/routes/ProtectedRoute.tsx";
 import { AuthProvider } from "./auth/AuthProvider.tsx";
+import "./Styles.css";
 
 const router = createBrowserRouter([
   {
