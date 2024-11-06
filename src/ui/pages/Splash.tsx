@@ -48,38 +48,6 @@ function Splash() {
             </Grid>
           </Grid>
         </Container>
-        <div style={{ width: "90%", margin: "0 auto", textAlign: "center" }}>
-          <h2 className="splash__title">
-            The Fashion App That <br /> Makes You Look Your Best
-          </h2>
-          <p className="splash__description">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Non
-            distinctio aliquid expedita, natus numquam nostrum corrupti
-            explicabo, quam quae
-          </p>
-          <Button
-            variant="contained"
-            style={{
-              width: "100%",
-              backgroundColor: "#7f5539",
-              borderRadius: "20px",
-            }}
-          >
-            <Link
-              to="/signup"
-              className="splash__link splash__link--primary"
-              style={{ textDecoration: "none" }}
-            >
-              Let's Get Started
-            </Link>
-          </Button>
-          <p className="splash__text">
-            Already have an account?
-            <Link to="/login" className="splash__link splash__link--secondary">
-              Sign In
-            </Link>
-          </p>
-        </div>
       </div>
     </>
   );
